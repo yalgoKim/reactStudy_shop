@@ -1,0 +1,47 @@
+.main-bg {
+  height: 300px;
+  background-image: url('https://scontent-ssn1-1.xx.fbcdn.net/v/t1.6435-9/82042161_589333595197773_5181931493491998720_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=9267fe&_nc_ohc=c0y2aJ1GKQcAX9IsdKn&_nc_ht=scontent-ssn1-1.xx&oh=00_AfCnpZ5CAAk7AtPv5ybaXwC4iGrZZr6Ke4KqiWbjgIUnLw&oe=64140DCB');
+  background-size: cover;
+  background-position: center;
+}
+
+/* css파일에서 src안에 이미지 넣을 땐 ./이미지경로 */
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

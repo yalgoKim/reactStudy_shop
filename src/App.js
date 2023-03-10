@@ -8,6 +8,7 @@ import CardDetail from './route/Detail.js';
 import axios from 'axios';
 import Cart from './route/Cart.js';
 import { useQuery } from '@tanstack/react-query';
+import navi from './navi.js';
 
 function App() {
   
@@ -28,15 +29,15 @@ function App() {
   let [shoes, setShoes] = useState(data);
   let [btnCount, setBtnCount] = useState(2); // 유저가 버튼 누른 횟수를 state로 지정
   let [loading, setLoading] = useState(false); // 로딩창 스위치
+  let [navList, setNavList] = useState(navi);
 
-  // 기존 data ajax요청해서 가져오는 법
-  // axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
-  //   a.data
-  // })
+  // // 기존 data ajax요청해서 가져오는 법
+  // let result2 = axios.get('https://codingapple1.github.io/userdata.json')
+  // .then((a)=>{ return a.data})
 
   // react-query 이용해서 ajax 요청하기
-  let result = useQuery('userName', ()=>
-    axios.get('https://codingapple1.github.io/userdata.json')
+  let result = useQuery(['userName'], async ()=>
+    await axios.get('https://codingapple1.github.io/userdata.json')
     .then((a)=>{ return a.data})
     )
   // useQuery로 감싸면 장점
@@ -45,30 +46,34 @@ function App() {
   // 3. 실패 시 retry 알아서 해줌
   // 4. state를 공유 안해도 됨
   // 5. ajax 결과 캐싱기능 (12시 10분에 실행한 get요청, 12시 13분에 새롭게 요청하면 기존에 get한 자료를 가져다줌, 좀 빠름 )
-
-
-
-
+  
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
         <Container>
-          <Navbar.Brand href="#home">SweetPotato Shop</Navbar.Brand>
+          <Navbar.Brand href="http://localhost:3000/">SweetPotato Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link> 
+            {/* <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link> 
             <Nav.Link onClick={() => { navigate('/detail')}}>Detail</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart')}}>Cart</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/event')}}>고구마대피소</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/event')}}>고구마대피소</Nav.Link> */}
+            {
+              navList.map((path) => {
+                return(
+                  <Nav.Link onClick={()=>{ navigate( path.to )}}> { path.title } </Nav.Link>
+                )
+              })
+              }
+            
           </Nav>
           <Nav className="ms-auto"> 
-          { result.isLoading ? '로딩중' : result.name } 님 반가워요!
-          {console.log(result)}
+          {/* { result.isLoading ? '로딩중' : result.name } 님 반가워요! */}
 
 
           {/* &&으로 if문대신 사용 가능 */}
-          {/* { result.isLoading && '로딩중' }
+          { result.isLoading && '로딩중' }
           { result.error && '에러남' }
-          { result.data && result.data.name } 님 반가워요 !  */}
+          { result.data && result.data.name } 님 반가워요 ! 
           </Nav>
 
         </Container>

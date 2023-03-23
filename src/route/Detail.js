@@ -13,7 +13,7 @@ function CardDetail(props){
 
     useEffect(()=>{
         // 현재 페이지의 상품정보, id정보
-        console.log(props.shoes.find(isTrue).id);
+        console.log(props.sweetPotato.find(isTrue).id);
         // 아래처럼 짜면 기존 데이터 '대체'임
         // localStorage.setItem('watched', [props.shoes.find(isTrue).id])
 
@@ -21,22 +21,22 @@ function CardDetail(props){
         let recentItem = JSON.parse(localStorage.getItem('watched'));
 
         // 꺼낸 자료에 오브젝트를 추가하려면 push하면 됨
-        recentItem.push(props.shoes.find(isTrue).id)
+        recentItem.push(props.sweetPotato.find(isTrue).id)
 
-        // 중복값 제거를 위해 Set으로 넣어주고,
-        recentItem = new Set(recentItem);
+        // // 중복값 제거를 위해 Set으로 넣어주고,
+        // recentItem = new Set(recentItem);
         
-        // 넣어준 뒤에 다시 Array자료로 변환시켜줌
-        recentItem = Array.from(recentItem);
+        // // 넣어준 뒤에 다시 Array자료로 변환시켜줌
+        // recentItem = Array.from(recentItem);
+
+        recentItem = [ ...new Set(recentItem)]
 
         // 오브젝트가 추가된 자료를 다시 로컬 스토리지에 넣어주기(넣을 때 Json으로 다시 변환해서!)
         localStorage.setItem('watched', JSON.stringify(recentItem))
     }, [])
 
     function isTrue(element) {
-        if(element.id == id) {
-            return true;
-        }
+            return element.id == id
     }
 
     useEffect(() => {
@@ -53,21 +53,22 @@ function CardDetail(props){
     return(
         <div className="container">
 
-            { show == true ? <Timeout/> : null }
+            { show ? <Timeout/> : null }
             {/* 경고창을 띄워줄 스위치 설정(false면 안보이게) */}
             {/* { check == false ? null : <InputCheck/> } */}
             { check == true ? <InputCheck/> : null }
 
             <div className="row">
                 <div className="col-md-6">
-                <img src = { process.env.PUBLIC_URL + '../'+ id +'.png'} width="100%"/>
+                {/* <img src = { process.env.PUBLIC_URL + '../'+ id +'.png'} width="100%"/> */}
+                <img src = { '../' + props.sweetPotato.find(isTrue).image } />
                 </div>
             <div className="col-md-6">
-                <h4 className="pt-5">{ props.shoes.find(isTrue).title }</h4>
-                <p>{props.shoes.find(isTrue).content}</p>
-                <p>{props.shoes.find(isTrue).price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                <h4 className="pt-5">{ props.sweetPotato.find(isTrue).title }</h4>
+                <p>{props.sweetPotato.find(isTrue).content}</p>
+                <p>{props.sweetPotato.find(isTrue).price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                 <button className="btn btn-danger" onClick={()=>{
-                    dispatch(addItem({id : props.shoes.find(isTrue).id , name : props.shoes.find(isTrue).title , count : 1}))
+                    dispatch(addItem({id : props.sweetPotato.find(isTrue).id , name : props.sweetPotato.find(isTrue).title , count : 1}))
                 }}>주문하기</button> 
                 <br></br><br></br><br></br>
                 <input onChange={(e) => {

@@ -76,7 +76,7 @@ function App() {
               setBtnCount((prev) => {
                 prev = prev + 3
                 setLoading(true);
-                let copy = [...data.slice(0, btnCount)];
+                let copy = [...data.slice(0, prev)];
                 setSweetPotato(copy);
                 return prev;
               })

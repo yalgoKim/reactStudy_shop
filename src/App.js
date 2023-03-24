@@ -73,10 +73,13 @@ function App() {
             <br></br>
             {btnCount < 10 ? 
             <button className="btn btn-default" onClick={()=>{
-              setBtnCount((prev) => prev + 3)
-              setLoading(true);
-              let copy = [...data.slice(0, btnCount)];
-              setSweetPotato(copy)
+              setBtnCount((prev) => {
+                prev = prev + 3
+                setLoading(true);
+                let copy = [...data.slice(0, btnCount)];
+                setSweetPotato(copy);
+                return prev;
+              })
             }}> more </button> 
             : null}
           </>
